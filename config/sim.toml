@@ -1,0 +1,68 @@
+# irobot_sim 설정. 모든 튜닝값은 여기에 둔다. (근거: 계획 §7, docs/DECISIONS.md)
+# 길이 m, 각도 rad(이름에 _deg가 붙은 항목만 도), 시간 s(시뮬레이션 시간).
+
+[model]
+scene = "models/franka/converted/mjcf/scene.xml"
+tcp_site = "tcp"
+target_body = "target"
+target_geom = "target_marker"
+home_key = "home"
+arm_joints = ["fr3_joint1", "fr3_joint2", "fr3_joint3", "fr3_joint4", "fr3_joint5", "fr3_joint6", "fr3_joint7"]
+arm_actuators = ["act_joint1", "act_joint2", "act_joint3", "act_joint4", "act_joint5", "act_joint6", "act_joint7"]
+finger_actuator = "act_finger"
+finger_open = 0.04
+# home: Franka 표준 ready 자세 [0, -pi/4, 0, -3pi/4, 0, pi/2, pi/4]
+home = [0.0, -0.7853981634, 0.0, -2.35619449, 0.0, 1.570796327, 0.7853981634]
+# 관절 속도 한계 (joint_limits.yaml)
+vmax = [2.62, 2.62, 2.62, 2.62, 5.26, 4.18, 5.26]
+
+[trajectory]
+vel_scale = 0.4        # quintic 최고속도를 vmax의 이 비율 이하로
+min_duration = 1.5
+max_duration = 6.0
+
+[reach]
+pos_tol = 0.003
+ori_tol_deg = 2.0
+vel_tol = 0.02
+hold_time = 0.25
+timeout = 10.0         # REACH 시작부터(VERIFY_REACH 포함). 실패 판정 전용
+
+[home]
+joint_tol = 0.005
+vel_tol = 0.02
+hold_time = 0.25
+timeout = 10.0         # RETURN_HOME 시작부터(VERIFY_HOME 포함). 실패 판정 전용
+init_timeout = 3.0     # CHECK_HOME
+
+[safety]
+joint_limit_margin = 0.01     # 한계 밖으로 이만큼 넘으면 JOINT_LIMIT
+discontinuity_factor = 3.0    # 한 스텝 |dq| > vmax*dt*factor 이면 STATE_DISCONTINUITY
+tracking_error_max = 0.1      # 임시값. 단계 1b 측정 후 확정 (REACH, RETURN_HOME)
+
+[target]
+r = [0.30, 0.70]
+phi_deg = [-90.0, 90.0]
+z = [0.15, 0.65]
+shoulder = [0.0, 0.0, 0.333]
+max_shoulder_dist = 0.85
+max_attempts = 100
+joint_margin = 0.05
+path_samples = 25
+sigma_min = 0.05
+
+[ik]
+max_iters = 300
+pos_tol = 0.001
+ori_tol_deg = 0.5
+damping = 0.05
+nullspace_gain = 0.05
+max_step = 0.3
+restarts = 4
+
+[run]
+cycle_pause = 0.5      # 복귀 확인 후 다음 목표까지 대기(home 제어 유지). 헤드리스에서는 0
+viewer_fps = 60
+quit_key = "Q"
+log_dir = "logs"
+trace_hz = 50

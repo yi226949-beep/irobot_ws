@@ -268,6 +268,11 @@ def step_augment(raw_path, mapping, urdf_model):
         root.insert(list(root).index(comp) + 1, opt)
     opt.set("timestep", "0.002")
     opt.set("integrator", "implicitfast")
+    # 수치 발산 시 MuJoCo의 자동 리셋(mj_resetData)을 끈다: 리셋 금지 원칙 + 발산 감지(D-007)
+    flag = opt.find("flag")
+    if flag is None:
+        flag = etree.SubElement(opt, "flag")
+    flag.set("autoreset", "disable")
 
     # geom 분류: 시각(OBJ 메시) / 충돌(STL 메시, 손가락 박스)
     nvis = ncol = 0

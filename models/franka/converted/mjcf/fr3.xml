@@ -1,6 +1,8 @@
 <mujoco model="fr3_hand">
   <compiler angle="radian" meshdir="../meshes/" autolimits="true"/>
-  <option timestep="0.002" integrator="implicitfast"/>
+  <option timestep="0.002" integrator="implicitfast">
+    <flag autoreset="disable"/>
+  </option>
   <asset>
     <mesh name="fr3_link0_v0" content_type="model/obj" file="visual/fr3_link0_v0.obj"/>
     <mesh name="fr3_link0_v1" content_type="model/obj" file="visual/fr3_link0_v1.obj"/>

@@ -44,3 +44,12 @@
 - 관절 힘 한계: 임포터가 URDF effort를 `actuatorfrcrange`로 옮겼다(87/12 Nm). 중력 보상(actuatorgravcomp)을 포함한 전체 액추에이터 힘이 이 한계 안에서 제한된다.
 - `mj_saveLastXML`은 숫자를 유효숫자 6자리로 저장한다. 이 때문에 질량에 최대 4.65e-6 kg의 반올림 오차가 생겼다.
 - 대응: 허용 오차는 그대로 두고, URDF를 직접 컴파일한 모델의 배정밀도 값으로 `<inertial>`을 다시 썼다. 그 결과 질량, 질량중심, 관성 오차가 모두 1e-14 수준이 됐다.
+
+## D-007 MuJoCo 자동 리셋 비활성화 (2026-10-07)
+- MuJoCo는 수치 발산(NaN 등)을 감지하면 기본 설정에서 `mj_resetData`로 자동 리셋한다. 이 동작은 리셋 금지 원칙을 어기고 `NUMERIC_DIVERGENCE` 감지도 가린다.
+- 대응: `build_model.py`가 `<option><flag autoreset="disable"/></option>`을 넣는다. `Robot` 초기화 때 이 설정이 꺼져 있는지 확인하고, 켜져 있으면 `MODEL_LOAD` 실패로 처리한다.
+
+## D-008 뷰어 종료 시 segfault 방지 (2026-10-07)
+- 현상: `launch_passive`의 `with` 블록을 나오자마자 프로세스가 끝나면 exit 139(segfault)가 난다. Wayland와 x11 백엔드 모두 재현됐다.
+- 원인: 뷰어 스레드가 정리를 끝내기 전에 인터프리터가 종료된다.
+- 대응: 루프가 끝나면 `v.close()`를 호출하고, `is_running()`이 False가 될 때까지(최대 3초) 기다린 뒤 0.3초를 더 기다렸다가 반환한다. 이후 exit 0을 확인했다.
