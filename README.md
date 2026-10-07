@@ -103,6 +103,8 @@ scripts/run.sh scripts/check_forbidden.py          # 금지 사항 정적 점검
 scripts/run_stage1c.sh                             # 실패 주입 9종
 ```
 
+`inspect_model.py`의 공식 YAML 비교는 원본이 있어야 합니다. 먼저 `scripts/fetch_model.sh`(git만 필요)를 실행하세요. 원본이 없으면 그 항목만 SKIP으로 표시합니다.
+
 ## 제어와 판정 요약
 
 - **목표**: 베이스 앞쪽 원통 영역(r 0.30–0.70 m, ±90°, z 0.15–0.65 m)에서 샘플링합니다. 그리퍼는 아래를 향하고, z축 회전(yaw)은 랜덤입니다.

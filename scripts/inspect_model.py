@@ -77,57 +77,61 @@ def main():
     check("관절 9개(팔 7 + 손가락 2)", m.njnt == 9, f"njnt={m.njnt}")
     check("액추에이터 8개(팔 7 + 손가락 1)", m.nu == 8, f"nu={m.nu}")
 
-    print("== 검증: 관절 한계 vs joint_limits.yaml")
-    lim = load_yaml_simple(SRC / "robots/fr3/joint_limits.yaml")
-    worst = 0.0
-    for jn in ARM:
-        j = m.joint(jn).id
-        y = lim[jn.replace("fr3_", "")]["limit"]
-        worst = max(worst, abs(m.jnt_range[j, 0] - y["lower"]), abs(m.jnt_range[j, 1] - y["upper"]))
-    check("관절 한계 일치(|차이| ≤ 1e-4)", worst <= 1e-4, f"최대 차이 {worst:.2e}")
+    if SRC.is_dir():
+        print("== 검증: 관절 한계 vs joint_limits.yaml")
+        lim = load_yaml_simple(SRC / "robots/fr3/joint_limits.yaml")
+        worst = 0.0
+        for jn in ARM:
+            j = m.joint(jn).id
+            y = lim[jn.replace("fr3_", "")]["limit"]
+            worst = max(worst, abs(m.jnt_range[j, 0] - y["lower"]), abs(m.jnt_range[j, 1] - y["upper"]))
+        check("관절 한계 일치(|차이| ≤ 1e-4)", worst <= 1e-4, f"최대 차이 {worst:.2e}")
 
-    print("== 검증: 질량·관성 vs inertials.yaml")
-    iner = load_yaml_simple(SRC / "robots/fr3/inertials.yaml")
-    hand_iner = load_yaml_simple(SRC / "end_effectors/franka_hand/inertials.yaml")
-    mass_err = com_err = inertia_rel = 0.0
-    for k in ("hand", "leftfinger", "rightfinger"):
-        diff = abs(m.body_mass[m.body(f"fr3_{k}").id] - hand_iner[k]["mass"])
-        mass_err = max(mass_err, diff)
-    for k, v in iner.items():
-        b = m.body(f"fr3_{k}").id
-        mass_err = max(mass_err, abs(m.body_mass[b] - v["mass"]))
-        com = np.array([float(x) for x in v["origin"]["xyz"].split()])
-        com_err = max(com_err, np.linalg.norm(m.body_ipos[b] - com))
-        I = v["inertia"]
-        Iy = np.array([[I["xx"], I["xy"], I["xz"]], [I["xy"], I["yy"], I["yz"]], [I["xz"], I["yz"], I["zz"]]])
-        R = quat_to_mat(m.body_iquat[b])
-        Im = R @ np.diag(m.body_inertia[b]) @ R.T
-        rel = np.linalg.norm(Im - Iy) / np.linalg.norm(Iy)
-        inertia_rel = max(inertia_rel, rel)
-        ev = np.sort(np.linalg.eigvalsh(Iy))
-        if rel > 1e-3:
-            print(f"    {k}: 관성 상대오차 {rel:.2e}, yaml 고유값 {ev}, mujoco diag {np.sort(m.body_inertia[b])}")
-    check("링크 질량 일치(팔 8 + 핸드·손가락 3, ≤1e-6 kg)", mass_err <= 1e-6, f"최대 차이 {mass_err:.2e} kg")
-    check("링크 질량중심 일치(≤1e-6 m)", com_err <= 1e-6, f"최대 차이 {com_err:.2e} m")
-    check("링크 관성 텐서 일치(상대오차 ≤ 1e-3)", inertia_rel <= 1e-3, f"최대 상대오차 {inertia_rel:.2e}")
-    robot_bodies = [b for b in range(m.nbody) if (name(B, b) or "").startswith("fr3_")]
-    total = sum(m.body_mass[b] for b in robot_bodies)
-    yaml_total = sum(v["mass"] for v in iner.values())
-    print(f"  로봇 총질량 {total:.4f} kg (팔 yaml 합 {yaml_total:.4f} kg + 핸드·손가락)")
+        print("== 검증: 질량·관성 vs inertials.yaml")
+        iner = load_yaml_simple(SRC / "robots/fr3/inertials.yaml")
+        hand_iner = load_yaml_simple(SRC / "end_effectors/franka_hand/inertials.yaml")
+        mass_err = com_err = inertia_rel = 0.0
+        for k in ("hand", "leftfinger", "rightfinger"):
+            diff = abs(m.body_mass[m.body(f"fr3_{k}").id] - hand_iner[k]["mass"])
+            mass_err = max(mass_err, diff)
+        for k, v in iner.items():
+            b = m.body(f"fr3_{k}").id
+            mass_err = max(mass_err, abs(m.body_mass[b] - v["mass"]))
+            com = np.array([float(x) for x in v["origin"]["xyz"].split()])
+            com_err = max(com_err, np.linalg.norm(m.body_ipos[b] - com))
+            I = v["inertia"]
+            Iy = np.array([[I["xx"], I["xy"], I["xz"]], [I["xy"], I["yy"], I["yz"]], [I["xz"], I["yz"], I["zz"]]])
+            R = quat_to_mat(m.body_iquat[b])
+            Im = R @ np.diag(m.body_inertia[b]) @ R.T
+            rel = np.linalg.norm(Im - Iy) / np.linalg.norm(Iy)
+            inertia_rel = max(inertia_rel, rel)
+            ev = np.sort(np.linalg.eigvalsh(Iy))
+            if rel > 1e-3:
+                print(f"    {k}: 관성 상대오차 {rel:.2e}, yaml 고유값 {ev}, mujoco diag {np.sort(m.body_inertia[b])}")
+        check("링크 질량 일치(팔 8 + 핸드·손가락 3, ≤1e-6 kg)", mass_err <= 1e-6, f"최대 차이 {mass_err:.2e} kg")
+        check("링크 질량중심 일치(≤1e-6 m)", com_err <= 1e-6, f"최대 차이 {com_err:.2e} m")
+        check("링크 관성 텐서 일치(상대오차 ≤ 1e-3)", inertia_rel <= 1e-3, f"최대 상대오차 {inertia_rel:.2e}")
+        robot_bodies = [b for b in range(m.nbody) if (name(B, b) or "").startswith("fr3_")]
+        total = sum(m.body_mass[b] for b in robot_bodies)
+        yaml_total = sum(v["mass"] for v in iner.values())
+        print(f"  로봇 총질량 {total:.4f} kg (팔 yaml 합 {yaml_total:.4f} kg + 핸드·손가락)")
 
-    print("== 검증: 관절 원점 vs kinematics.yaml")
-    kin = load_yaml_simple(SRC / "robots/fr3/kinematics.yaml")
-    pos_err = rot_err = 0.0
-    for i in range(1, 8):
-        k = kin[f"joint{i}"]["kinematic"]
-        b = m.body(f"fr3_link{i}").id
-        pos_err = max(pos_err, np.linalg.norm(m.body_pos[b] - [k["x"], k["y"], k["z"]]))
-        Rm, Ry = quat_to_mat(m.body_quat[b]), rpy_to_mat(k["roll"], k["pitch"], k["yaw"])
-        rot_err = max(rot_err, np.linalg.norm(Rm - Ry))
-    k8 = kin["joint8"]["kinematic"]
-    pos_err = max(pos_err, np.linalg.norm(m.body_pos[m.body("fr3_link8").id] - [k8["x"], k8["y"], k8["z"]]))
-    check("관절 원점 위치 일치(≤1e-6 m)", pos_err <= 1e-6, f"최대 차이 {pos_err:.2e} m")
-    check("관절 원점 자세 일치(‖ΔR‖ ≤ 1e-4)", rot_err <= 1e-4, f"최대 차이 {rot_err:.2e}")
+        print("== 검증: 관절 원점 vs kinematics.yaml")
+        kin = load_yaml_simple(SRC / "robots/fr3/kinematics.yaml")
+        pos_err = rot_err = 0.0
+        for i in range(1, 8):
+            k = kin[f"joint{i}"]["kinematic"]
+            b = m.body(f"fr3_link{i}").id
+            pos_err = max(pos_err, np.linalg.norm(m.body_pos[b] - [k["x"], k["y"], k["z"]]))
+            Rm, Ry = quat_to_mat(m.body_quat[b]), rpy_to_mat(k["roll"], k["pitch"], k["yaw"])
+            rot_err = max(rot_err, np.linalg.norm(Rm - Ry))
+        k8 = kin["joint8"]["kinematic"]
+        pos_err = max(pos_err, np.linalg.norm(m.body_pos[m.body("fr3_link8").id] - [k8["x"], k8["y"], k8["z"]]))
+        check("관절 원점 위치 일치(≤1e-6 m)", pos_err <= 1e-6, f"최대 차이 {pos_err:.2e} m")
+        check("관절 원점 자세 일치(‖ΔR‖ ≤ 1e-4)", rot_err <= 1e-4, f"최대 차이 {rot_err:.2e}")
+    else:
+        print("== 검증: 공식 YAML 비교 — [SKIP] 원본이 없습니다(models/franka/source/).")
+        print("  원본과 비교하려면 먼저 scripts/fetch_model.sh 를 실행하세요(git만 필요, ROS 불필요).")
     check("TCP 오프셋 = 0.1034 m", abs(m.body_pos[m.body("fr3_hand_tcp").id][2] - 0.1034) < 1e-9)
 
     print("== 충돌 geom (body별)")
