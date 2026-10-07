@@ -1,0 +1,15 @@
+irobot_ws — MuJoCo FR3 랜덤 목표 reach / home 복귀 시뮬레이션
+Copyright 2026 윤수
+
+이 저장소의 코드(src/, scripts/, config/, docs/)는 Apache License 2.0을 따른다(LICENSE).
+
+---------------------------------------------------------------------------
+이 저장소는 다음 제3자 저작물을 변환해 포함한다.
+
+franka_description (https://github.com/frankarobotics/franka_description, tag 2.9.0)
+Copyright 2023 Franka Robotics GmbH
+Licensed under the Apache License, Version 2.0 (models/franka/LICENSE, models/franka/NOTICE)
+
+포함 위치: models/franka/converted/
+변경 사항: Xacro를 URDF로 전개했고, 시각 메시(DAE)를 OBJ로 변환했으며, MuJoCo MJCF로 변환하고
+액추에이터·장면 등을 추가했다. 자세한 내용은 models/franka/SOURCE.md를 참조한다.
