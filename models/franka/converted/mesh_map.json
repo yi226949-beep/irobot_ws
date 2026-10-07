@@ -1,0 +1,550 @@
+{
+ "package://franka_description/meshes/robots/fr3/visual/link0.dae": {
+  "kind": "visual",
+  "parts": [
+   [
+    "visual/fr3_link0_v0.obj",
+    [
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link0_v1.obj",
+    [
+     1.0,
+     0.071,
+     0.039,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link0_v2.obj",
+    [
+     0.039,
+     0.051,
+     0.055,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link0_v3.obj",
+    [
+     0.02,
+     0.02,
+     0.02,
+     1.0
+    ]
+   ]
+  ],
+  "bounds": [
+   [
+    -0.154072913812211,
+    -0.09457283469216371,
+    0.0
+   ],
+   [
+    0.07156230503476912,
+    0.09457283469216371,
+    0.14000000664964318
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/collision/link0.stl": {
+  "kind": "collision",
+  "file": "collision/fr3_link0_c.stl",
+  "bounds": [
+   [
+    -0.15284602344036102,
+    -0.09442070126533508,
+    -9.591394700692035e-06
+   ],
+   [
+    0.07011518627405167,
+    0.09379471838474274,
+    0.14002195000648499
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/visual/link1.dae": {
+  "kind": "visual",
+  "parts": [
+   [
+    "visual/fr3_link1_v0.obj",
+    [
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ]
+   ]
+  ],
+  "bounds": [
+   [
+    -0.055000082721006205,
+    -0.1294000084352429,
+    -0.192000004073057
+   ],
+   [
+    0.055000082721006205,
+    0.05500000261235982,
+    0.05500001003452798
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/collision/link1.stl": {
+  "kind": "collision",
+  "file": "collision/fr3_link1_c.stl",
+  "bounds": [
+   [
+    -0.055048488080501556,
+    -0.1295335739850998,
+    -0.19202402234077454
+   ],
+   [
+    0.05531303957104683,
+    0.055047497153282166,
+    0.055308450013399124
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/visual/link2.dae": {
+  "kind": "visual",
+  "parts": [
+   [
+    "visual/fr3_link2_v0.obj",
+    [
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ]
+   ]
+  ],
+  "bounds": [
+   [
+    -0.055000082721006205,
+    -0.1930000091670081,
+    -0.05500000261235982
+   ],
+   [
+    0.055000082721006205,
+    0.05400001400895471,
+    0.12940000004265428
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/collision/link2.stl": {
+  "kind": "collision",
+  "file": "collision/fr3_link2_c.stl",
+  "bounds": [
+   [
+    -0.05490269511938095,
+    -0.1940387636423111,
+    -0.0547369122505188
+   ],
+   [
+    0.0559193454682827,
+    0.05619162693619728,
+    0.1285688728094101
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/visual/link3.dae": {
+  "kind": "visual",
+  "parts": [
+   [
+    "visual/fr3_link3_v0.obj",
+    [
+     0.039,
+     0.051,
+     0.055,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link3_v1.obj",
+    [
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ]
+   ]
+  ],
+  "bounds": [
+   [
+    -0.05500000261235982,
+    -0.05500000261235982,
+    -0.12099999934434891
+   ],
+   [
+    0.1374989995228974,
+    0.1110500047201595,
+    0.05683791498628743
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/collision/link3.stl": {
+  "kind": "collision",
+  "file": "collision/fr3_link3_c.stl",
+  "bounds": [
+   [
+    -0.05592770501971245,
+    -0.05506880208849907,
+    -0.12301822751760483
+   ],
+   [
+    0.13760411739349365,
+    0.11173930764198303,
+    0.05388648808002472
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/visual/link4.dae": {
+  "kind": "visual",
+  "parts": [
+   [
+    "visual/fr3_link4_v0.obj",
+    [
+     0.039,
+     0.051,
+     0.055,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link4_v1.obj",
+    [
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ]
+   ]
+  ],
+  "bounds": [
+   [
+    -0.13750000115658334,
+    -0.054887922833291,
+    -0.054999999006169066
+   ],
+   [
+    0.054999022307239624,
+    0.12295000879837105,
+    0.11105000832635016
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/collision/link4.stl": {
+  "kind": "collision",
+  "file": "collision/fr3_link4_c.stl",
+  "bounds": [
+   [
+    -0.1375061273574829,
+    -0.05490853264927864,
+    -0.05473724380135536
+   ],
+   [
+    0.05500274896621704,
+    0.12418539077043533,
+    0.1102537140250206
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/visual/link5.dae": {
+  "kind": "visual",
+  "parts": [
+   [
+    "visual/fr3_link5_v0.obj",
+    [
+     0.039,
+     0.051,
+     0.055,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link5_v1.obj",
+    [
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ]
+   ]
+  ],
+  "bounds": [
+   [
+    -0.05499890397949514,
+    -0.05500001405645216,
+    -0.2590000033378601
+   ],
+   [
+    0.05500000261235982,
+    0.12992149970121325,
+    0.053294109395704226
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/collision/link5.stl": {
+  "kind": "collision",
+  "file": "collision/fr3_link5_c.stl",
+  "bounds": [
+   [
+    -0.05476672202348709,
+    -0.05400887131690979,
+    -0.25902634859085083
+   ],
+   [
+    0.0554763488471508,
+    0.13231098651885986,
+    0.051560793071985245
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/visual/link6.dae": {
+  "kind": "visual",
+  "parts": [
+   [
+    "visual/fr3_link6_v0.obj",
+    [
+     0.039,
+     0.051,
+     0.055,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link6_v1.obj",
+    [
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link6_v2.obj",
+    [
+     0.863,
+     0.863,
+     0.863,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link6_v3.obj",
+    [
+     0.024,
+     0.447,
+     0.737,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link6_v4.obj",
+    [
+     0.522,
+     0.008,
+     0.012,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link6_v5.obj",
+    [
+     0.102,
+     0.573,
+     0.102,
+     1.0
+    ]
+   ]
+  ],
+  "bounds": [
+   [
+    -0.047833673841801705,
+    -0.051200009111312,
+    -0.04399109080254498
+   ],
+   [
+    0.13200000605110657,
+    0.08192154864467026,
+    0.05695588671570938
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/collision/link6.stl": {
+  "kind": "collision",
+  "file": "collision/fr3_link6_c.stl",
+  "bounds": [
+   [
+    -0.04844902455806732,
+    -0.05126696079969406,
+    -0.04598260670900345
+   ],
+   [
+    0.13249829411506653,
+    0.08115825057029724,
+    0.055588897317647934
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/visual/link7.dae": {
+  "kind": "visual",
+  "parts": [
+   [
+    "visual/fr3_link7_v0.obj",
+    [
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link7_v1.obj",
+    [
+     0.039,
+     0.051,
+     0.055,
+     1.0
+    ]
+   ],
+   [
+    "visual/fr3_link7_v2.obj",
+    [
+     0.02,
+     0.02,
+     0.02,
+     1.0
+    ]
+   ]
+  ],
+  "bounds": [
+   [
+    -0.04399996394056408,
+    -0.04400000591900635,
+    0.05199999724397821
+   ],
+   [
+    0.08128136237730246,
+    0.08128135589522467,
+    0.10680000557919979
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robots/fr3/collision/link7.stl": {
+  "kind": "collision",
+  "file": "collision/fr3_link7_c.stl",
+  "bounds": [
+   [
+    -0.043860264122486115,
+    -0.04444156959652901,
+    0.05040937662124634
+   ],
+   [
+    0.08102095127105713,
+    0.0810941532254219,
+    0.10505083203315735
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robot_ee/franka_hand_white/visual/hand.dae": {
+  "kind": "visual",
+  "parts": [
+   [
+    "visual/hand_hand_v0.obj",
+    [
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ]
+   ],
+   [
+    "visual/hand_hand_v1.obj",
+    [
+     0.251,
+     0.251,
+     0.251,
+     1.0
+    ]
+   ],
+   [
+    "visual/hand_hand_v2.obj",
+    [
+     0.902,
+     0.922,
+     0.929,
+     1.0
+    ]
+   ]
+  ],
+  "bounds": [
+   [
+    -0.03151952847838402,
+    -0.1039464995265007,
+    -0.02594578079879284
+   ],
+   [
+    0.031525131314992905,
+    0.10056989639997482,
+    0.06599997729063034
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robot_ee/franka_hand_white/collision/hand.stl": {
+  "kind": "collision",
+  "file": "collision/hand_hand_c.stl",
+  "bounds": [
+   [
+    -0.031635917723178864,
+    -0.10398972034454346,
+    -0.02592480182647705
+   ],
+   [
+    0.03161578252911568,
+    0.10042587667703629,
+    0.06596215069293976
+   ]
+  ]
+ },
+ "package://franka_description/meshes/robot_ee/franka_hand_white/visual/finger.dae": {
+  "kind": "visual",
+  "parts": [
+   [
+    "visual/hand_finger_v0.obj",
+    [
+     0.902,
+     0.922,
+     0.929,
+     1.0
+    ]
+   ],
+   [
+    "visual/hand_finger_v1.obj",
+    [
+     0.251,
+     0.251,
+     0.251,
+     1.0
+    ]
+   ]
+  ],
+  "bounds": [
+   [
+    -0.010500900447368622,
+    -8.376430196221918e-05,
+    0.00013333199603948742
+   ],
+   [
+    0.01050155982375145,
+    0.02634548954665661,
+    0.05389988049864769
+   ]
+  ]
+ }
+}

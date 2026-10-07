@@ -1,0 +1,140 @@
+<mujoco model="fr3">
+  <compiler angle="radian" meshdir="../meshes/"/>
+
+  <asset>
+    <mesh name="fr3_link0_v0" content_type="model/obj" file="visual/fr3_link0_v0.obj"/>
+    <mesh name="fr3_link0_v1" content_type="model/obj" file="visual/fr3_link0_v1.obj"/>
+    <mesh name="fr3_link0_v2" content_type="model/obj" file="visual/fr3_link0_v2.obj"/>
+    <mesh name="fr3_link0_v3" content_type="model/obj" file="visual/fr3_link0_v3.obj"/>
+    <mesh name="fr3_link0_c" content_type="model/stl" file="collision/fr3_link0_c.stl"/>
+    <mesh name="fr3_link1_v0" content_type="model/obj" file="visual/fr3_link1_v0.obj"/>
+    <mesh name="fr3_link1_c" content_type="model/stl" file="collision/fr3_link1_c.stl"/>
+    <mesh name="fr3_link2_v0" content_type="model/obj" file="visual/fr3_link2_v0.obj"/>
+    <mesh name="fr3_link2_c" content_type="model/stl" file="collision/fr3_link2_c.stl"/>
+    <mesh name="fr3_link3_v0" content_type="model/obj" file="visual/fr3_link3_v0.obj"/>
+    <mesh name="fr3_link3_v1" content_type="model/obj" file="visual/fr3_link3_v1.obj"/>
+    <mesh name="fr3_link3_c" content_type="model/stl" file="collision/fr3_link3_c.stl"/>
+    <mesh name="fr3_link4_v0" content_type="model/obj" file="visual/fr3_link4_v0.obj"/>
+    <mesh name="fr3_link4_v1" content_type="model/obj" file="visual/fr3_link4_v1.obj"/>
+    <mesh name="fr3_link4_c" content_type="model/stl" file="collision/fr3_link4_c.stl"/>
+    <mesh name="fr3_link5_v0" content_type="model/obj" file="visual/fr3_link5_v0.obj"/>
+    <mesh name="fr3_link5_v1" content_type="model/obj" file="visual/fr3_link5_v1.obj"/>
+    <mesh name="fr3_link5_c" content_type="model/stl" file="collision/fr3_link5_c.stl"/>
+    <mesh name="fr3_link6_v0" content_type="model/obj" file="visual/fr3_link6_v0.obj"/>
+    <mesh name="fr3_link6_v1" content_type="model/obj" file="visual/fr3_link6_v1.obj"/>
+    <mesh name="fr3_link6_v2" content_type="model/obj" file="visual/fr3_link6_v2.obj"/>
+    <mesh name="fr3_link6_v3" content_type="model/obj" file="visual/fr3_link6_v3.obj"/>
+    <mesh name="fr3_link6_v4" content_type="model/obj" file="visual/fr3_link6_v4.obj"/>
+    <mesh name="fr3_link6_v5" content_type="model/obj" file="visual/fr3_link6_v5.obj"/>
+    <mesh name="fr3_link6_c" content_type="model/stl" file="collision/fr3_link6_c.stl"/>
+    <mesh name="fr3_link7_v0" content_type="model/obj" file="visual/fr3_link7_v0.obj"/>
+    <mesh name="fr3_link7_v1" content_type="model/obj" file="visual/fr3_link7_v1.obj"/>
+    <mesh name="fr3_link7_v2" content_type="model/obj" file="visual/fr3_link7_v2.obj"/>
+    <mesh name="fr3_link7_c" content_type="model/stl" file="collision/fr3_link7_c.stl"/>
+    <mesh name="hand_hand_v0" content_type="model/obj" file="visual/hand_hand_v0.obj"/>
+    <mesh name="hand_hand_v1" content_type="model/obj" file="visual/hand_hand_v1.obj"/>
+    <mesh name="hand_hand_v2" content_type="model/obj" file="visual/hand_hand_v2.obj"/>
+    <mesh name="hand_hand_c" content_type="model/stl" file="collision/hand_hand_c.stl"/>
+    <mesh name="hand_finger_v0" content_type="model/obj" file="visual/hand_finger_v0.obj"/>
+    <mesh name="hand_finger_v1" content_type="model/obj" file="visual/hand_finger_v1.obj"/>
+  </asset>
+
+  <worldbody>
+    <body name="base">
+      <body name="fr3_link0">
+        <inertial pos="-0.0172 0.0004 0.0745" quat="0.661377 -0.250161 -0.250161 0.661377" mass="2.3966" diaginertia="0.0115 0.0107656 0.00673444"/>
+        <geom name="fr3_link0_vis0" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link0_v0"/>
+        <geom name="fr3_link0_vis1" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link0_v1"/>
+        <geom name="fr3_link0_vis2" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link0_v2"/>
+        <geom name="fr3_link0_vis3" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link0_v3"/>
+        <geom name="fr3_link0_col0" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="fr3_link0_c"/>
+        <body name="fr3_link1" pos="0 0 0.333">
+          <inertial pos="4.128e-07 -0.0181251 -0.0386036" quat="0.998098 -0.0605364 0.00380489 0.0110109" mass="2.92747" diaginertia="0.0239286 0.0227246 0.00610634"/>
+          <joint name="fr3_joint1" range="-2.9007 2.9007" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2"/>
+          <geom name="fr3_link1_vis0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link1_v0"/>
+          <geom name="fr3_link1_col0" quat="1 0 0 0" type="mesh" mesh="fr3_link1_c"/>
+          <body name="fr3_link2" quat="0.707107 -0.707107 0 0">
+            <inertial pos="0.00318289 -0.0743222 0.00881461" quat="0.5026 0.584436 -0.465998 0.434365" mass="2.93554" diaginertia="0.0629567 0.0411924 0.0246371"/>
+            <joint name="fr3_joint2" range="-1.8361 1.8361" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2"/>
+            <geom name="fr3_link2_vis0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link2_v0"/>
+            <geom name="fr3_link2_col0" quat="1 0 0 0" type="mesh" mesh="fr3_link2_c"/>
+            <body name="fr3_link3" pos="0 -0.316 0" quat="0.707107 0.707107 0 0">
+              <inertial pos="0.0407016 -0.00482006 -0.0289731" quat="0.921025 -0.244161 0.155272 0.260745" mass="2.2449" diaginertia="0.0267409 0.0189869 0.0171587"/>
+              <joint name="fr3_joint3" range="-2.9007 2.9007" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2"/>
+              <geom name="fr3_link3_vis0" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link3_v0"/>
+              <geom name="fr3_link3_vis1" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link3_v1"/>
+              <geom name="fr3_link3_col0" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="fr3_link3_c"/>
+              <body name="fr3_link4" pos="0.0825 0 0" quat="0.707107 0.707107 0 0">
+                <inertial pos="-0.0459101 0.0630493 -0.00851879" quat="0.438018 0.803311 0.00937812 0.403414" mass="2.6156" diaginertia="0.05139 0.0372717 0.0160047"/>
+                <joint name="fr3_joint4" range="-3.077 -0.1169" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2"/>
+                <geom name="fr3_link4_vis0" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link4_v0"/>
+                <geom name="fr3_link4_vis1" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link4_v1"/>
+                <geom name="fr3_link4_col0" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="fr3_link4_c"/>
+                <body name="fr3_link5" pos="-0.0825 0.384 0" quat="0.707107 -0.707107 0 0">
+                  <inertial pos="-0.00160396 0.0292536 -0.0972966" quat="0.919031 0.125604 0.0751531 -0.366003" mass="2.32712" diaginertia="0.0579335 0.0449144 0.0130634"/>
+                  <joint name="fr3_joint5" range="-2.8763 2.8763" actuatorfrcrange="-12 12" damping="0.003" frictionloss="0.2"/>
+                  <geom name="fr3_link5_vis0" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link5_v0"/>
+                  <geom name="fr3_link5_vis1" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link5_v1"/>
+                  <geom name="fr3_link5_col0" type="mesh" mesh="fr3_link5_c"/>
+                  <body name="fr3_link6" quat="0.707107 0.707107 0 0">
+                    <inertial pos="0.0597131 -0.0410295 -0.0101693" quat="0.621301 0.552665 0.510011 0.220081" mass="1.81704" diaginertia="0.0175039 0.0161123 0.00193529"/>
+                    <joint name="fr3_joint6" range="0.4398 4.6216" actuatorfrcrange="-12 12" damping="0.003" frictionloss="0.2"/>
+                    <geom name="fr3_link6_vis0" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link6_v0"/>
+                    <geom name="fr3_link6_vis1" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link6_v1"/>
+                    <geom name="fr3_link6_vis2" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link6_v2"/>
+                    <geom name="fr3_link6_vis3" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link6_v3"/>
+                    <geom name="fr3_link6_vis4" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link6_v4"/>
+                    <geom name="fr3_link6_vis5" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link6_v5"/>
+                    <geom name="fr3_link6_col0" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="fr3_link6_c"/>
+                    <body name="fr3_link7" pos="0.088 0 0" quat="0.707107 0.707107 0 0">
+                      <inertial pos="0.00452258 0.00862619 -0.0161633" quat="0.727579 0.0978683 -0.24906 0.63168" mass="0.627143" diaginertia="0.000223836 0.000223642 5.64132e-07"/>
+                      <joint name="fr3_joint7" range="-3.0508 3.0508" actuatorfrcrange="-12 12" damping="0.003" frictionloss="0.2"/>
+                      <geom name="fr3_link7_vis0" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link7_v0"/>
+                      <geom name="fr3_link7_vis1" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link7_v1"/>
+                      <geom name="fr3_link7_vis2" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="fr3_link7_v2"/>
+                      <geom name="fr3_link7_col0" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="fr3_link7_c"/>
+                      <body name="fr3_link8" pos="0 0 0.107">
+                        <body name="fr3_hand" quat="0.92388 0 0 -0.382683">
+                          <inertial pos="-3.76e-05 0.0119128 0.020726" quat="0.702181 0.711999 0 0" mass="0.6544" diaginertia="0.00186 0.00174028 0.000299722"/>
+                          <geom name="fr3_hand_vis0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="hand_hand_v0"/>
+                          <geom name="fr3_hand_vis1" pos="0 0 0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="hand_hand_v1"/>
+                          <geom name="fr3_hand_vis2" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="hand_hand_v2"/>
+                          <geom name="fr3_hand_col0" quat="1 0 0 0" type="mesh" mesh="hand_hand_c"/>
+                          <body name="fr3_hand_tcp" pos="0 0 0.1034"/>
+                          <body name="fr3_leftfinger" pos="0 0 0.0584">
+                            <inertial pos="0 0.015285 0.0219675" quat="0.705067 -0.0536699 0.0536699 0.705067" mass="0.0291" diaginertia="8.69232e-06 8.49e-06 1.60768e-06"/>
+                            <joint name="fr3_finger_joint1" type="slide" range="0 0.04" actuatorfrcrange="-100 100" damping="0.3" axis="0 1 0"/>
+                            <geom name="fr3_leftfinger_vis0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="hand_finger_v0"/>
+                            <geom name="fr3_leftfinger_vis1" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="hand_finger_v1"/>
+                            <geom name="fr3_leftfinger_col0" size="0.011 0.0075 0.01" pos="0 0.0185 0.011" type="box"/>
+                            <geom name="fr3_leftfinger_col1" size="0.011 0.0044 0.0019" pos="0 0.0068 0.0022" type="box"/>
+                            <geom name="fr3_leftfinger_col2" size="0.00875 0.0035 0.01175" pos="0 0.0159 0.02835" quat="0.965926 0.258819 0 0" type="box"/>
+                            <geom name="fr3_leftfinger_col3" size="0.00875 0.0076 0.00925" pos="0 0.00758 0.04525" type="box"/>
+                          </body>
+                          <body name="fr3_rightfinger" pos="0 0 0.0584" quat="0 0 0 1">
+                            <inertial pos="0 0.015285 0.0219675" quat="0.705067 -0.0536699 0.0536699 0.705067" mass="0.0291" diaginertia="8.69232e-06 8.49e-06 1.60768e-06"/>
+                            <joint name="fr3_finger_joint2" type="slide" range="0 0.04" actuatorfrcrange="-100 100" damping="0.3" axis="0 1 0"/>
+                            <geom name="fr3_rightfinger_vis0" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="hand_finger_v0"/>
+                            <geom name="fr3_rightfinger_vis1" quat="1 0 0 0" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="hand_finger_v1"/>
+                            <geom name="fr3_rightfinger_col0" size="0.011 0.0075 0.01" pos="0 0.0185 0.011" type="box"/>
+                            <geom name="fr3_rightfinger_col1" size="0.011 0.0044 0.0019" pos="0 0.0068 0.0022" type="box"/>
+                            <geom name="fr3_rightfinger_col2" size="0.00875 0.0035 0.01175" pos="0 0.0159 0.02835" quat="0 0 -0.258819 0.965926" type="box"/>
+                            <geom name="fr3_rightfinger_col3" size="0.00875 0.0076 0.00925" pos="0 0.00758 0.04525" type="box"/>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <equality>
+    <joint joint1="fr3_finger_joint2" joint2="fr3_finger_joint1"/>
+  </equality>
+</mujoco>
