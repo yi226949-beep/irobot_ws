@@ -112,8 +112,9 @@ class StateMachine:
     # ------------------------------------------------------------ 스텝 전: 제어 입력
     def pre_step(self):
         if self.state in (State.REACH, State.RETURN_HOME):
-            self.q_ref = self.traj(self.now - self.t_traj)
-            self.r.set_arm_ctrl(self.q_ref)
+            t = self.now - self.t_traj
+            self.q_ref = self.traj(t)
+            self.r.set_arm_ctrl(self.q_ref, self.traj.velocity(t))
         else:
             self.q_ref = None
             self.r.set_arm_ctrl(self.ctrl_target)

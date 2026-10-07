@@ -38,7 +38,7 @@ init_timeout = 3.0     # CHECK_HOME
 [safety]
 joint_limit_margin = 0.01     # 한계 밖으로 이만큼 넘으면 JOINT_LIMIT
 discontinuity_factor = 3.0    # 한 스텝 |dq| > vmax*dt*factor 이면 STATE_DISCONTINUITY
-tracking_error_max = 0.1      # 임시값. 단계 1b 측정 후 확정 (REACH, RETURN_HOME)
+tracking_error_max = 0.022    # 1b 측정 최대 0.00167 rad → max(2×측정, 측정+0.02) (D-009)
 
 [target]
 r = [0.30, 0.70]

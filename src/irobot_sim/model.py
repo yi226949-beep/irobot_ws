@@ -58,6 +58,11 @@ class Robot:
         self.robot_bodies = {b for b in range(m.nbody)
                              if (mujoco.mj_id2name(m, mujoco.mjtObj.mjOBJ_BODY, b) or "").startswith("fr3_")}
         self.dt = m.opt.timestep
+        # 속도 피드포워드 계수 kv/kp (position 액추에이터: 힘 = kp*(ctrl - q) - kv*qd).
+        # ctrl = q_ref + (kv/kp)*qd_ref 이면 힘 = kp*(q_ref - q) + kv*(qd_ref - qd) (D-009)
+        kp = m.actuator_gainprm[self.arm_act, 0]
+        kv = -m.actuator_biasprm[self.arm_act, 2]
+        self.ff_gain = kv / kp
 
     def apply_initial_keyframe(self):
         """초기 조건 설정(프로그램 시작 시 1회). 복귀 용도로 쓰지 않는다."""
@@ -78,8 +83,8 @@ class Robot:
         d = self.data
         return d.site_xpos[self.tcp_site].copy(), d.site_xmat[self.tcp_site].reshape(3, 3).copy()
 
-    def set_arm_ctrl(self, q_ref):
-        self.data.ctrl[self.arm_act] = q_ref
+    def set_arm_ctrl(self, q_ref, qd_ref=None):
+        self.data.ctrl[self.arm_act] = q_ref if qd_ref is None else q_ref + self.ff_gain * qd_ref
         self.data.ctrl[self.finger_act] = self.finger_open
 
     def body_name(self, b):

@@ -21,5 +21,12 @@ class Quintic:
         s = tau ** 3 * (10 - 15 * tau + 6 * tau ** 2)
         return self.q0 + (self.q1 - self.q0) * s
 
+    def velocity(self, t):
+        if t <= 0.0 or t >= self.T:
+            return np.zeros_like(self.q0)
+        tau = t / self.T
+        ds = 30 * tau ** 2 * (1 - tau) ** 2
+        return (self.q1 - self.q0) * ds / self.T
+
     def done(self, t):
         return t >= self.T
