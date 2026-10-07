@@ -1,0 +1,6 @@
+# 작업공간 전용 의존성. 정확한 버전은 requirements.lock 참조.
+mujoco>=3.2
+numpy
+trimesh
+pycollada
+lxml
