@@ -73,7 +73,12 @@ def main():
     g.add_argument("--jump", type=float, default=0.3, help="jump 크기 [rad]")
     g.add_argument("--kp-scale", type=float, default=0.02, help="lowkp 축소 배율")
     a = ap.parse_args()
-    code, _, _ = run(a, step_hook=make_hook(a))
+    code, _, _, viewer_stuck = run(a, step_hook=make_hook(a))
+    if viewer_stuck:
+        import os
+        sys.stdout.flush()
+        sys.stderr.flush()
+        os._exit(code)
     return code
 
 

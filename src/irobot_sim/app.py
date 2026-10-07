@@ -9,6 +9,7 @@ import argparse
 import math
 import os
 import signal
+import sys
 import time
 
 import mujoco
@@ -60,6 +61,7 @@ def run(args, step_hook=None):
               hook=getattr(step_hook, "__name__", None) if step_hook else None)
 
     stop = Stop()
+    stop.viewer_stuck = False
     prev_sigint = signal.signal(signal.SIGINT, lambda *_: stop.set("SIGINT"))
     t_wall0 = time.time()
     sm = None
@@ -71,7 +73,7 @@ def run(args, step_hook=None):
             log.event("failure", type="MODEL_LOAD", cycle=0, state="INIT", detail=str(e))
             log.block("실패 보고 (반복 중단)", ["실패 유형      : MODEL_LOAD", "사이클 / 상태  : 0 / INIT",
                                              f"세부           : {e}"])
-            return 1, None, log
+            return 1, None, log, False
         planner = Planner(robot, cfg)
         fixed = tuple(float(x) for x in args.fixed_target.split(",")) if args.fixed_target else None
         opts = RunOptions(master_seed=master_seed, max_cycles=args.max_cycles,
@@ -92,16 +94,16 @@ def run(args, step_hook=None):
             while not sm.finished and stop.reason is None:
                 step_once()
         else:
-            _viewer_loop(robot, sm, cfg, stop, step_once, log)
+            stop.viewer_stuck = _viewer_loop(robot, sm, cfg, stop, step_once, log)
 
         exit_code = 1 if sm.failure else 0
     finally:
         signal.signal(signal.SIGINT, prev_sigint)
         if sm is not None:
             reason = stop.reason or sm.shutdown_reason or ("FAILED" if sm.failure else "UNKNOWN")
-            _summary(sm, log, reason, time.time() - t_wall0)
+            _summary(sm, log, reason, time.time() - t_wall0, exit_code)
         log.close()
-    return exit_code, sm, log
+    return exit_code, sm, log, stop.viewer_stuck
 
 
 def _viewer_loop(robot, sm, cfg, stop, step_once, log):
@@ -120,6 +122,7 @@ def _viewer_loop(robot, sm, cfg, stop, step_once, log):
         log.info(f"뷰어 시작. 종료: 창 닫기 / '{cfg.run.quit_key}' 키 / 터미널 Ctrl+C")
         wall0, sim0 = time.perf_counter(), robot.data.time
         failed_reported = False
+        stall_logged_at = -1e9
         while v.is_running() and stop.reason is None and sm.shutdown_reason is None:
             t0 = time.perf_counter()
             with v.lock():
@@ -136,27 +139,41 @@ def _viewer_loop(robot, sm, cfg, stop, step_once, log):
                     failed_reported = True
                 tgt = sm.target.pos if sm.target is not None else None
                 viz.show_marker(robot, tgt, sm.marker_phase)
+            t_sync = time.perf_counter()
             v.sync()
+            d_sync = time.perf_counter() - t_sync
+            # 진단: 화면 갱신이 오래 멈춘 구간(예: Wayland에서 창이 가려짐)을 기록한다(D-010).
+            if d_sync > 0.5 and t_sync - stall_logged_at > 5.0:
+                log.event("viewer_stall", sync_seconds=d_sync)
+                log.info(f"뷰어 화면 갱신이 {d_sync:.1f} s 멈췄습니다(창이 가려졌을 수 있음).")
+                stall_logged_at = t_sync
             time.sleep(max(0.0, frame - (time.perf_counter() - t0)))
         if stop.reason is None and sm.shutdown_reason is None and not v.is_running():
             stop.set("WINDOW_CLOSED")
     finally:
         # 뷰어 스레드가 완전히 정리된 뒤 반환한다. 바로 프로세스를 끝내면 정리 중인
         # 뷰어 스레드와 충돌해 segfault가 난다(D-008).
+        t_close = time.perf_counter()
         v.close()
-        deadline = time.perf_counter() + 3.0
+        deadline = t_close + 3.0
         while v.is_running() and time.perf_counter() < deadline:
             time.sleep(0.05)
+        stuck = v.is_running()
+        log.event("viewer_close", wait_seconds=time.perf_counter() - t_close, timed_out=stuck)
+        if stuck:
+            log.info("뷰어 스레드가 3 s 안에 끝나지 않았습니다. 로그를 저장한 뒤 바로 종료합니다(D-010).")
         time.sleep(0.3)
+    return stuck
 
 
-def _summary(sm, log, reason, wall):
+def _summary(sm, log, reason, wall, exit_code):
     sm.log.sim_time = sm.now
     if sm.state != State.FAILED:
         sm.state = State.SHUTDOWN
     fail = sm.failure["type"] if sm.failure else None
     log.event("summary", cycles_started=sm.started, cycles_succeeded=sm.success, failure=fail,
-              shutdown_reason=reason, sim_time=sm.now, wall_time=wall, master_seed=sm.opts.master_seed)
+              shutdown_reason=reason, sim_time=sm.now, wall_time=wall, master_seed=sm.opts.master_seed,
+              exit_code=exit_code)
     log.block("실행 요약", [
         f"총 사이클(목표 확정) : {sm.started}",
         f"성공(도달+복귀 확인) : {sm.success}",
@@ -164,11 +181,18 @@ def _summary(sm, log, reason, wall):
         f"종료 사유            : {reason}",
         f"sim 시간 / 실제 시간 : {sm.now:.1f} s / {wall:.1f} s",
         f"마스터 시드          : {sm.opts.master_seed}",
+        f"종료 코드            : {exit_code}",
         f"로그                 : logs/{log.jsonl_path.name}",
     ])
 
 
 def main(argv=None):
     args = build_arg_parser().parse_args(argv)
-    code, _, _ = run(args)
+    code, _, _, viewer_stuck = run(args)
+    if viewer_stuck:
+        # 멈춘 뷰어 스레드가 남은 상태에서 인터프리터 정리를 하면 비정상 종료될 수 있다.
+        # 로그는 이미 닫혔으므로(flush 완료) 정리를 건너뛰고 의도한 종료 코드로 끝낸다(D-010).
+        sys.stdout.flush()
+        sys.stderr.flush()
+        os._exit(code)
     return code
